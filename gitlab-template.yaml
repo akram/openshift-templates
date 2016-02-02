@@ -12,7 +12,7 @@ objects:
     annotations: {}
     labels:
       project: gitlab
-      provider: fabric8
+      provider: akram
     name: gitlab
   spec:
     deprecatedPublicIPs: []
@@ -23,7 +23,7 @@ objects:
       targetPort: 80
     selector:
       project: gitlab
-      provider: fabric8
+      provider: akram
     type: LoadBalancer
 - apiVersion: v1
   kind: Service
@@ -31,7 +31,7 @@ objects:
     annotations: {}
     labels:
       project: gitlab
-      provider: fabric8
+      provider: akram
     name: gitlab-ssh
   spec:
     deprecatedPublicIPs: []
@@ -42,7 +42,7 @@ objects:
       targetPort: 22
     selector:
       project: gitlab
-      provider: fabric8
+      provider: akram
 - apiVersion: v1
   kind: Route
   metadata:
@@ -56,29 +56,29 @@ objects:
   kind: ReplicationController
   metadata:
     annotations:
-      fabric8.io/build-id: "6"
-      fabric8.io/git-branch: release-v2.2.104
-      fabric8.io/git-commit: df8e36b08230aa1698bb6c61012911c9662fc23d
+      akram.io/build-id: "6"
+      akram.io/git-branch: release-v2.2.104
+      akram.io/git-commit: df8e36b08230aa1698bb6c61012911c9662fc23d
     labels:
-      group: io.fabric8.devops.apps
+      group: io.akram.devops.apps
       project: gitlab
-      provider: fabric8
+      provider: akram
       version: 2.2.104
     name: gitlab
   spec:
     replicas: 1
     selector:
-      group: io.fabric8.devops.apps
+      group: io.akram.devops.apps
       project: gitlab
-      provider: fabric8
+      provider: akram
       version: 2.2.104
     template:
       metadata:
         annotations: {}
         labels:
-          group: io.fabric8.devops.apps
+          group: io.akram.devops.apps
           project: gitlab
-          provider: fabric8
+          provider: akram
           version: 2.2.104
       spec:
         containers:
@@ -129,13 +129,13 @@ parameters:
   name: APPLICATION_DOMAIN
 - description: The email address of the Jenkins user on Gitlab
   name: JENKINS_GITLAB_EMAIL
-  value: gitlab@fabric8.local
+  value: gitlab@${APPLICATION_DOMAIN}
 - description: The user name for Jenkins to login to Gitlab
   name: JENKINS_GITLAB_USER
   value: jenkins
 - description: The GitLab server URL
   name: GITLAB_URL
-  value: gitlab.vagrant.f8
+  value: ${APPLICATION_DOMAIN}
 - description: The password for Jenkins to login to Gitlab
   name: JENKINS_GITLAB_PASSWORD
   value: RedHat$1
